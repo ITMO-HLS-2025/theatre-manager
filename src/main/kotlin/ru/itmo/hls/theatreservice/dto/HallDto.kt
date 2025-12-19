@@ -1,0 +1,21 @@
+package ru.itmo.hls.theatreservice.dto
+
+data class HallViewDto(
+    val id: Long?,
+    val number: Int
+)
+
+data class HallDto(
+    val id: Long?,
+    val number: Int,
+    val seatRows: List<SeatRawDto>
+)
+
+data class HallCreateDto(
+    val number: Int,
+    val seatRows: List<SeatRawDto>
+)
+
+data class HallCreatePayload(
+    val number: Int
+)
