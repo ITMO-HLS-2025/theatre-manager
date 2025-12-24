@@ -1,4 +1,4 @@
-package ru.itmo.hls.theatreservice
+package ru.itmo.hls.theatremanager
 
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection

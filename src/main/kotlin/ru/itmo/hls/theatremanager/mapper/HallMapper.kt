@@ -1,11 +1,11 @@
-package ru.itmo.hls.theatreservice.mapper
+package ru.itmo.hls.theatremanager.mapper
 
-import ru.itmo.hls.theatreservice.dto.HallCreatePayload
-import ru.itmo.hls.theatreservice.dto.HallDto
-import ru.itmo.hls.theatreservice.dto.HallViewDto
-import ru.itmo.hls.theatreservice.dto.SeatRawDto
-import ru.itmo.hls.theatreservice.entity.Hall
-import ru.itmo.hls.theatreservice.entity.Theatre
+import ru.itmo.hls.theatremanager.dto.HallCreatePayload
+import ru.itmo.hls.theatremanager.dto.HallDto
+import ru.itmo.hls.theatremanager.dto.HallViewDto
+import ru.itmo.hls.theatremanager.dto.SeatRawDto
+import ru.itmo.hls.theatremanager.entity.Hall
+import ru.itmo.hls.theatremanager.entity.Theatre
 
 
 fun Hall.toViewDto() : HallViewDto =

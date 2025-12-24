@@ -1,4 +1,4 @@
-package ru.itmo.hls.theatreservice
+package ru.itmo.hls.theatremanager
 
 import org.springframework.boot.fromApplication
 import org.springframework.boot.with

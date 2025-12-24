@@ -1,11 +1,11 @@
-package ru.itmo.hls.theatreservice.repository
+package ru.itmo.hls.theatremanager.repository
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import ru.itmo.hls.theatreservice.entity.Theatre
+import ru.itmo.hls.theatremanager.entity.Theatre
 
 @Repository
 interface TheatreRepository : JpaRepository<Theatre, Long> {

@@ -1,4 +1,4 @@
-package ru.itmo.hls.theatreservice.dto
+package ru.itmo.hls.theatremanager.dto
 
 data class HallViewDto(
     val id: Long?,

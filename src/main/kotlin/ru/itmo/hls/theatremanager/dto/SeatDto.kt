@@ -1,4 +1,4 @@
-package ru.itmo.hls.theatreservice.dto
+package ru.itmo.hls.theatremanager.dto
 
 data class SeatRawDto(val row: Int, val seats: List<SeatStatusDto>)
 

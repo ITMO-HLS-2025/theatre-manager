@@ -1,7 +1,7 @@
-package ru.itmo.hls.theatreservice.mapper
+package ru.itmo.hls.theatremanager.mapper
 
-import ru.itmo.hls.theatreservice.dto.SeatDto
-import ru.itmo.hls.theatreservice.entity.Seat
+import ru.itmo.hls.theatremanager.dto.SeatDto
+import ru.itmo.hls.theatremanager.entity.Seat
 
 
 //fun SeatPrice.toSeatStatusDto(ticket: Ticket?): SeatStatusDto = SeatStatusDto(

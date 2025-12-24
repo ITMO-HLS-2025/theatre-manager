@@ -1,4 +1,4 @@
-package ru.itmo.hls.theatreservice.entity
+package ru.itmo.hls.theatremanager.entity
 
 import jakarta.persistence.*
 

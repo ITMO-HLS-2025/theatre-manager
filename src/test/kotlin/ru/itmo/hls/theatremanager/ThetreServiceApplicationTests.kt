@@ -1,4 +1,4 @@
-package ru.itmo.hls.theatreservice
+package ru.itmo.hls.theatremanager
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

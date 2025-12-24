@@ -11,8 +11,8 @@
     <groupId>ru.itmo.hls</groupId>
     <artifactId>theatre-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>thetre-service</name>
-    <description>thetre-service</description>
+    <name>theatre-manager</name>
+    <description>theatre-manager</description>
     <url/>
     <licenses>
         <license/>

@@ -1,7 +1,7 @@
-package ru.itmo.hls.theatreservice.mapper
+package ru.itmo.hls.theatremanager.mapper
 
-import ru.itmo.hls.theatreservice.dto.*
-import ru.itmo.hls.theatreservice.entity.Theatre
+import ru.itmo.hls.theatremanager.dto.*
+import ru.itmo.hls.theatremanager.entity.Theatre
 import kotlin.collections.map
 
 fun Theatre.toDto(shows: List<ShowViewDto>): TheatreDto =
