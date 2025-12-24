@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.itmo.hls</groupId>
-    <artifactId>theatre-service</artifactId>
+    <artifactId>theatre-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>thetre-service</name>
     <description>thetre-service</description>
