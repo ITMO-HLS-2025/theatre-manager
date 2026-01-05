@@ -143,21 +143,22 @@ class TheatreService(
     }
 
     @Transactional
-    suspend fun updateHall(id: Long, dto: HallDto): HallDto {
-        val hall = hallService.findHallById(id)
-            ?: throw HallNotFoundException("Hall not found with id $id")
+    suspend fun updateHall(dto: HallDto): HallDto {
+        val hallId = dto.id ?: throw HallNotFoundException("Hall id is required")
+        val hall = hallService.findHallById(hallId)
+            ?: throw HallNotFoundException("Hall not found with id $hallId")
 
         val updatedHall = hallService.save(hall.copy(number = dto.number))
-        val hallId = updatedHall.id ?: throw HallNotFoundException("Hall not found with id $id")
-        seatPriceService.deleteByHallId(hallId)
-        seatService.deleteByHallId(hallId)
+        val updatedHallId = updatedHall.id ?: throw HallNotFoundException("Hall not found with id $hallId")
+        seatPriceService.deleteByHallId(updatedHallId)
+        seatService.deleteByHallId(updatedHallId)
         dto.seatRows.forEach { row ->
             row.seats.forEach { seat ->
                 seatService.save(
                     Seat(
                         rowNumber = row.row,
                         seatNumber = seat.number,
-                        hallId = hallId
+                        hallId = updatedHallId
                     )
                 )
             }

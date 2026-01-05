@@ -9,12 +9,6 @@ data class SeatStatusDto
     val number: Int,
     val price: Int
 )
-data class SeatDto
-    (
-    val id: Long,
-    val raw: Int,
-    val number: Int,
-)
 
 data class SeatPriceDto(
     val id: Long,

@@ -193,7 +193,7 @@ class TheatreControllerTest {
     }
 
     @Test
-    @DisplayName("PUT /api/theatres/halls/{id} updates hall")
+    @DisplayName("PUT /api/theatres/halls updates hall")
     @Sql(
         scripts = ["classpath:sql/clean.sql", "classpath:sql/init.sql", "classpath:sql/insert.sql"],
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
@@ -207,10 +207,10 @@ class TheatreControllerTest {
                 )
             )
         )
-        val payload = HallDto(id = null, number = 9, seatRows = seatRows)
+        val payload = HallDto(id = 1L, number = 9, seatRows = seatRows)
 
         val result = mockMvc.perform(
-            put("/api/theatres/halls/1")
+            put("/api/theatres/halls")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(payload))
         )

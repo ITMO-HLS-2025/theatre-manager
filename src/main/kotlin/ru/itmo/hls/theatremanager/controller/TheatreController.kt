@@ -56,9 +56,9 @@ class TheatreController(
     suspend fun createHall(@PathVariable theatreId: Long, @RequestBody dto: HallCreateDto): HallDto =
         theatreService.createHall(theatreId, dto)
 
-    @PutMapping("/halls/{id}")
-    suspend fun updateHall(@PathVariable id: Long, @RequestBody dto: HallDto): HallDto =
-        theatreService.updateHall(id, dto)
+    @PutMapping("/halls")
+    suspend fun updateHall(@RequestBody dto: HallDto): HallDto =
+        theatreService.updateHall(dto)
 
     @DeleteMapping("/halls/{id}")
     suspend fun deleteHall(@PathVariable id: Long) {

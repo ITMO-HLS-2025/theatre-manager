@@ -276,9 +276,9 @@ class TheatreServiceIntegrationTest {
             )
         )
 
-        val hallDto = HallDto(id = null, number = 10, seatRows = seatRows)
+        val hallDto = HallDto(id = 1L, number = 10, seatRows = seatRows)
 
-        val updated = theatreService.updateHall(1L, hallDto)
+        val updated = theatreService.updateHall(hallDto)
 
         assertEquals(10, updated.number)
         assertEquals(1, updated.seatRows.size)
@@ -300,10 +300,10 @@ class TheatreServiceIntegrationTest {
                 )
             )
         )
-        val hallDto = HallDto(id = null, number = 10, seatRows = seatRows)
+        val hallDto = HallDto(id = 999L, number = 10, seatRows = seatRows)
 
         assertThrows<HallNotFoundException> {
-            runBlocking { theatreService.updateHall(999L, hallDto) }
+            runBlocking { theatreService.updateHall(hallDto) }
         }
     }
 
