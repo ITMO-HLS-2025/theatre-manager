@@ -1,17 +1,56 @@
 package ru.itmo.hls.theatremanager.repository
 
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
+import io.r2dbc.spi.Row
+import kotlinx.coroutines.reactor.awaitSingle
+import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.stereotype.Repository
 import ru.itmo.hls.theatremanager.entity.SeatPrice
-import ru.itmo.hls.theatremanager.entity.SeatPriceId
 
 @Repository
-interface SeatPriceRepository : JpaRepository<SeatPrice, SeatPriceId> {
-    @Query("from SeatPrice seatPrice join fetch seatPrice.seat s where seatPrice.id.seatId = :showId")
-    fun findSeatsByShow(showId: Long) : List<SeatPrice>;
+class SeatPriceRepository(
+    private val databaseClient: DatabaseClient
+) {
+    suspend fun findSeatPricesByShowAndSeatIds(showId: Long, seatIds: List<Long>): List<SeatPrice> {
+        if (seatIds.isEmpty()) return emptyList()
 
-    @Query("from SeatPrice sp join fetch sp.seat s where s.id in :ids and sp.id.seatId = :showId")
-    fun findSeatsByShowIdAndIdIn(showId: Long, ids : List<Long>) : List<SeatPrice>
+        val placeholders = seatIds.indices.joinToString(",") { ":id$it" }
+        val sql = """
+            select sp.seat_id, sp.show_id, sp.price
+            from seat_price sp
+            where sp.show_id = :showId and sp.seat_id in ($placeholders)
+        """.trimIndent()
 
+        var spec = databaseClient.sql(sql).bind("showId", showId)
+        seatIds.forEachIndexed { index, id ->
+            spec = spec.bind("id$index", id)
+        }
+
+        return spec.map { row, _ ->
+            SeatPrice(
+                seatId = row.getLong("seat_id"),
+                showId = row.getLong("show_id"),
+                price = row.getInt("price")
+            )
+        }.all().collectList().awaitSingle()
+    }
+
+    suspend fun deleteByHallId(hallId: Long): Int {
+        val sql = """
+            delete from seat_price
+            where seat_id in (select id from seat where hall_id = :hallId)
+        """.trimIndent()
+
+        return databaseClient.sql(sql)
+            .bind("hallId", hallId)
+            .fetch()
+            .rowsUpdated()
+            .awaitSingle()
+            .toInt()
+    }
 }
+
+private fun Row.getLong(name: String): Long =
+    (get(name) as Number?)?.toLong() ?: 0L
+
+private fun Row.getInt(name: String): Int =
+    (get(name) as Number?)?.toInt() ?: 0

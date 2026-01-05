@@ -1,54 +1,50 @@
 package ru.itmo.hls.theatremanager.mapper
 
-import ru.itmo.hls.theatremanager.dto.*
+import ru.itmo.hls.theatremanager.dto.HallViewDto
+import ru.itmo.hls.theatremanager.dto.ShowViewDto
+import ru.itmo.hls.theatremanager.dto.TheatreCreatePayload
+import ru.itmo.hls.theatremanager.dto.TheatreDto
+import ru.itmo.hls.theatremanager.dto.TheatrePayload
+import ru.itmo.hls.theatremanager.dto.TheatreViewDto
 import ru.itmo.hls.theatremanager.entity.Theatre
-import kotlin.collections.map
 
-fun Theatre.toDto(shows: List<ShowViewDto>): TheatreDto =
+fun Theatre.toDto(halls: List<HallViewDto>, shows: List<ShowViewDto>): TheatreDto =
     TheatreDto(
-        id = id,
+        id = id ?: 0,
         name = name,
         city = city,
         address = address,
-        halls = halls.map { it.toViewDto() },
+        halls = halls,
         shows = shows
     )
 
 fun Theatre.toViewDto(): TheatreViewDto = TheatreViewDto(
-    id = id,
+    id = id ?: 0,
     name = name,
     city = city,
     address = address
 )
 
 fun TheatrePayload.toEntity(): Theatre {
-    val theatre = Theatre(
+    return Theatre(
         id = id,
         name = name,
         city = city,
-        address = address,
-        halls = mutableListOf()
+        address = address
     )
-    theatre.halls = halls.map { it.toEntity(theatre) }.toMutableList()
-    return theatre
 }
 
-fun TheatreCreatePayload.toEntity() : Theatre
-{
-    val theatre = Theatre(
+fun TheatreCreatePayload.toEntity(): Theatre =
+    Theatre(
         name = name,
         city = city,
-        address = address,
-        halls = mutableListOf()
+        address = address
     )
-    theatre.halls = halls.map { it.toEntity(theatre) }.toMutableList()
-    return theatre
-}
 
-fun Theatre.toPayload(): TheatrePayload = TheatrePayload(
-    id = id,
+fun Theatre.toPayload(halls: List<HallViewDto>): TheatrePayload = TheatrePayload(
+    id = id ?: 0,
     name = name,
     city = city,
     address = address,
-    halls = halls.map { it.toViewDto() }
+    halls = halls
 )

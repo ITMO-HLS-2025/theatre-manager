@@ -11,7 +11,7 @@ import ru.itmo.hls.theatremanager.entity.Seat
 //    price = price
 //)
 
-fun Seat.toSeatDto(): SeatDto = SeatDto(id,rowNumber, seatNumber)
+fun Seat.toSeatDto(): SeatDto = SeatDto(id ?: 0, rowNumber, seatNumber)
 //
 //private fun mapTicketToSeatStatus(ticket: Ticket?): SeatStatus {
 //    if (ticket == null) return SeatStatus.FREE

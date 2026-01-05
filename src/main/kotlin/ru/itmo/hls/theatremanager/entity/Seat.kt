@@ -1,29 +1,21 @@
 package ru.itmo.hls.theatremanager.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
 
-
-@Entity
-@Table(name = "seat")
-class Seat(
+@Table("seat")
+data class Seat(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0,
+    @Column("id")
+    val id: Long? = null,
 
+    @Column("row_number")
     val rowNumber: Int,
+
+    @Column("seat_number")
     val seatNumber: Int,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hall_id")
-    val hall: Hall
+    @Column("hall_id")
+    val hallId: Long
 )
-{
-    constructor() : this(0,0,0, Hall())
-}

@@ -1,26 +1,16 @@
 package ru.itmo.hls.theatremanager.entity
 
-import jakarta.persistence.*
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
 
-@Entity
-@Table(name = "seat_price")
-class SeatPrice(
-    @EmbeddedId
-    var id: SeatPriceId,
+@Table("seat_price")
+data class SeatPrice(
+    @Column("seat_id")
+    val seatId: Long,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("seatId")
-    @JoinColumn(name = "seat_id")
-    val seat: Seat,
+    @Column("show_id")
+    val showId: Long,
 
+    @Column("price")
     val price: Int
-)
-{
-    constructor():this(SeatPriceId(), Seat(), 0);
-}
-
-@Embeddable
-data class SeatPriceId(
-    val seatId: Long = 0,
-    val showId: Long = 0
 )

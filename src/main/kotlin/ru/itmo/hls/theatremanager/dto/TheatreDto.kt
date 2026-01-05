@@ -7,6 +7,13 @@ data class TheatreViewDto(
     val address: String
 )
 
+data class TheatrePage(
+    val content: List<TheatreViewDto>,
+    val totalElements: Long,
+    val pageNumber: Int,
+    val pageSize: Int
+)
+
 data class TheatreDto(
     val id: Long,
     val name: String,

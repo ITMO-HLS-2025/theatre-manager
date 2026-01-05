@@ -1,20 +1,17 @@
 package ru.itmo.hls.theatremanager.repository
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
+import kotlinx.coroutines.flow.Flow
+import org.springframework.data.r2dbc.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
 import ru.itmo.hls.theatremanager.entity.Theatre
 
 @Repository
-interface TheatreRepository : JpaRepository<Theatre, Long> {
+interface TheatreRepository : CoroutineCrudRepository<Theatre, Long> {
 
-    @Query("select t from Theatre t where t.city = :city")
-    fun findAllByCity(city: String, pageable: Pageable): Page<Theatre>
+    @Query("select * from theatre where city = :city limit :limit offset :offset")
+    fun findAllByCity(city: String, limit: Int, offset: Long): Flow<Theatre>
 
-    @Query("select t from Theatre t join fetch t.halls where t.id = :id")
-    fun findTheatreByIdFetchHall(id: Long): Theatre?
-
-    fun findTheatresById(id : Long) : Theatre?
+    @Query("select count(*) from theatre where city = :city")
+    suspend fun countByCity(city: String): Long
 }

@@ -1,14 +1,15 @@
 package ru.itmo.hls.theatremanager.repository
 
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
+import kotlinx.coroutines.flow.Flow
+import org.springframework.data.r2dbc.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
 import ru.itmo.hls.theatremanager.entity.Seat
-import ru.itmo.hls.theatremanager.entity.SeatPrice
-
 
 @Repository
-interface SeatRepository : JpaRepository<Seat, Long> {
-    @Query("from SeatPrice seatPrice join fetch seatPrice.seat s where seatPrice.id.seatId = :seatId")
-    fun findSeatsByShow(showId: Long) : List<SeatPrice>;
+interface SeatRepository : CoroutineCrudRepository<Seat, Long> {
+    fun findAllByHallId(hallId: Long): Flow<Seat>
+
+    @Query("delete from seat where hall_id = :hallId")
+    suspend fun deleteByHallId(hallId: Long): Int
 }

@@ -1,21 +1,21 @@
 package ru.itmo.hls.theatremanager.entity
 
-import jakarta.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
 
-
-@Entity
-@Table(name = "theatre")
-class Theatre(
+@Table("theatre")
+data class Theatre(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0,
+    @Column("id")
+    val id: Long? = null,
 
+    @Column("name")
     val name: String,
+
+    @Column("city")
     val city: String,
-    val address: String,
-    @OneToMany(mappedBy = "theatre", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var halls: MutableList<Hall> = mutableListOf(),
+
+    @Column("address")
+    val address: String
 )
-{
-    constructor() : this(name = "", city = "", address = "")
-}
