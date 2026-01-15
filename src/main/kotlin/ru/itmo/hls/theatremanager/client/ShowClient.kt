@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam
 import ru.itmo.hls.theatremanager.dto.ShowViewDto
 import java.time.LocalDateTime
 
-@FeignClient(name = "show-manager")
+@FeignClient(
+    name = "show-manager",
+    path = "/api/shows",
+    fallback = ShowClientFallback::class
+)
 interface ShowClient {
 
-    @GetMapping("/shows/theatre/{theatreId}")
+    @GetMapping("/theatre/{theatreId}")
     fun findAllByTheatreId(
         @PathVariable theatreId: Long,
         @RequestParam("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) from: LocalDateTime,

@@ -1,0 +1,15 @@
+spring:
+  flyway:
+    enabled: false
+  cloud:
+    discovery:
+      enabled: false
+      client:
+        simple:
+          enabled: false
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false

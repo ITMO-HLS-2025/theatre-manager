@@ -39,6 +39,10 @@ class TheatreController(
     suspend fun getTheatreInfo(@PathVariable id: Long): TheatreDto =
         theatreService.getTheatreInfo(id)
 
+    @PostMapping("/batch")
+    suspend fun getTheatres(@RequestBody ids: List<Long>): List<TheatreViewDto> =
+        theatreService.getTheatresByIds(ids)
+
     @DeleteMapping("/{id}")
     suspend fun deleteTheatre(@PathVariable id: Long) {
         theatreService.deleteTheatre(id)

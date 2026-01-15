@@ -8,14 +8,31 @@ spring:
     url: r2dbc:postgresql://localhost:5401/thetre_db
     username: postgres
     password: postgres
+  flyway:
+    url: jdbc:postgresql://localhost:5401/thetre_db
+    user: postgres
+    password: postgres
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
   jackson:
     serialization:
       write-dates-as-timestamps: false
 
 server:
-  port: 0
+  port: 8082
 
 logging:
   level:
     org.springframework: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

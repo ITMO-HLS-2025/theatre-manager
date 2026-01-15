@@ -11,6 +11,7 @@ import ru.itmo.hls.theatremanager.dto.TheatreCreatePayload
 import ru.itmo.hls.theatremanager.dto.TheatreDto
 import ru.itmo.hls.theatremanager.dto.TheatrePage
 import ru.itmo.hls.theatremanager.dto.TheatrePayload
+import ru.itmo.hls.theatremanager.dto.TheatreViewDto
 import ru.itmo.hls.theatremanager.entity.Hall
 import ru.itmo.hls.theatremanager.entity.Seat
 import ru.itmo.hls.theatremanager.exception.HallNotFoundException
@@ -65,6 +66,13 @@ class TheatreService(
         )
         log.info("Найдено {} шоу для театра id={}", shows.size, id)
         return theatre.toDto(halls, shows)
+    }
+
+    suspend fun getTheatresByIds(ids: List<Long>): List<TheatreViewDto> {
+        if (ids.isEmpty()) return emptyList()
+        return theatreRepository.findAllById(ids)
+            .map { it.toViewDto() }
+            .toList()
     }
 
     @Transactional

@@ -4,6 +4,6 @@ import java.time.LocalDateTime
 
 data class ShowViewDto(
     val id: Long,
-    val tittle: String,
+    val title: String,
     val date: LocalDateTime,
 )
