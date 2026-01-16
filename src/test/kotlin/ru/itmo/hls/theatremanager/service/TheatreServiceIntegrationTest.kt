@@ -19,9 +19,8 @@ import ru.itmo.hls.theatremanager.dto.HallCreateDto
 import ru.itmo.hls.theatremanager.dto.HallCreatePayload
 import ru.itmo.hls.theatremanager.dto.HallDto
 import ru.itmo.hls.theatremanager.dto.HallViewDto
-import ru.itmo.hls.theatremanager.dto.SeatRawDto
-import ru.itmo.hls.theatremanager.dto.SeatStatus
-import ru.itmo.hls.theatremanager.dto.SeatStatusDto
+import ru.itmo.hls.theatremanager.dto.SeatCreateDto
+import ru.itmo.hls.theatremanager.dto.SeatRowCreateDto
 import ru.itmo.hls.theatremanager.dto.TheatreCreatePayload
 import ru.itmo.hls.theatremanager.dto.TheatrePayload
 import ru.itmo.hls.theatremanager.exception.HallNotFoundException
@@ -206,11 +205,11 @@ class TheatreServiceIntegrationTest {
     )
     fun createHallWithSeats() = runBlocking {
         val seatRows = listOf(
-            SeatRawDto(
+            SeatRowCreateDto(
                 row = 1,
                 seats = listOf(
-                    SeatStatusDto(id = 0L, status = SeatStatus.FREE, number = 1, price = 1000),
-                    SeatStatusDto(id = 0L, status = SeatStatus.FREE, number = 2, price = 1200)
+                    SeatCreateDto(number = 1),
+                    SeatCreateDto(number = 2)
                 )
             )
         )
@@ -233,10 +232,10 @@ class TheatreServiceIntegrationTest {
     )
     fun createHallThrowsWhenTheatreNotFound() {
         val seatRows = listOf(
-            SeatRawDto(
+            SeatRowCreateDto(
                 row = 1,
                 seats = listOf(
-                    SeatStatusDto(id = 0L, status = SeatStatus.FREE, number = 1, price = 1000)
+                    SeatCreateDto(number = 1)
                 )
             )
         )
@@ -268,10 +267,10 @@ class TheatreServiceIntegrationTest {
     )
     fun updateHallWithSeats() = runBlocking {
         val seatRows = listOf(
-            SeatRawDto(
+            SeatRowCreateDto(
                 row = 1,
                 seats = listOf(
-                    SeatStatusDto(id = 0L, status = SeatStatus.FREE, number = 1, price = 1000)
+                    SeatCreateDto(number = 1)
                 )
             )
         )
@@ -293,10 +292,10 @@ class TheatreServiceIntegrationTest {
     )
     fun updateHallThrowsWhenNotFound() {
         val seatRows = listOf(
-            SeatRawDto(
+            SeatRowCreateDto(
                 row = 1,
                 seats = listOf(
-                    SeatStatusDto(id = 0L, status = SeatStatus.FREE, number = 1, price = 1000)
+                    SeatCreateDto(number = 1)
                 )
             )
         )

@@ -47,6 +47,34 @@ class SeatPriceRepository(
             .awaitSingle()
             .toInt()
     }
+
+    suspend fun replaceByShowId(showId: Long, prices: List<SeatPrice>): Int {
+        val deleteSql = "delete from seat_price where show_id = :showId"
+        databaseClient.sql(deleteSql)
+            .bind("showId", showId)
+            .fetch()
+            .rowsUpdated()
+            .awaitSingle()
+
+        if (prices.isEmpty()) return 0
+
+        var updated = 0
+        prices.forEach { price ->
+            val insertSql = """
+                insert into seat_price (seat_id, show_id, price)
+                values (:seatId, :showId, :price)
+            """.trimIndent()
+            updated += databaseClient.sql(insertSql)
+                .bind("seatId", price.seatId)
+                .bind("showId", price.showId)
+                .bind("price", price.price)
+                .fetch()
+                .rowsUpdated()
+                .awaitSingle()
+                .toInt()
+        }
+        return updated
+    }
 }
 
 private fun Row.getLong(name: String): Long =

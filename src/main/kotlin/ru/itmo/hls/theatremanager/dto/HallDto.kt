@@ -8,12 +8,12 @@ data class HallViewDto(
 data class HallDto(
     val id: Long?,
     val number: Int,
-    val seatRows: List<SeatRawDto>
+    val seatRows: List<SeatRowCreateDto>
 )
 
 data class HallCreateDto(
     val number: Int,
-    val seatRows: List<SeatRawDto>
+    val seatRows: List<SeatRowCreateDto>
 )
 
 data class HallCreatePayload(

@@ -31,9 +31,8 @@ import ru.itmo.hls.theatremanager.dto.HallCreateDto
 import ru.itmo.hls.theatremanager.dto.HallCreatePayload
 import ru.itmo.hls.theatremanager.dto.HallDto
 import ru.itmo.hls.theatremanager.dto.HallViewDto
-import ru.itmo.hls.theatremanager.dto.SeatRawDto
-import ru.itmo.hls.theatremanager.dto.SeatStatus
-import ru.itmo.hls.theatremanager.dto.SeatStatusDto
+import ru.itmo.hls.theatremanager.dto.SeatCreateDto
+import ru.itmo.hls.theatremanager.dto.SeatRowCreateDto
 import ru.itmo.hls.theatremanager.dto.TheatreCreatePayload
 import ru.itmo.hls.theatremanager.dto.TheatrePayload
 
@@ -169,10 +168,10 @@ class TheatreControllerTest {
     )
     fun createHall() {
         val seatRows = listOf(
-            SeatRawDto(
+            SeatRowCreateDto(
                 row = 1,
                 seats = listOf(
-                    SeatStatusDto(id = 0L, status = SeatStatus.FREE, number = 1, price = 1000)
+                    SeatCreateDto(number = 1)
                 )
             )
         )
@@ -200,10 +199,10 @@ class TheatreControllerTest {
     )
     fun updateHall() {
         val seatRows = listOf(
-            SeatRawDto(
+            SeatRowCreateDto(
                 row = 1,
                 seats = listOf(
-                    SeatStatusDto(id = 0L, status = SeatStatus.FREE, number = 1, price = 1000)
+                    SeatCreateDto(number = 1)
                 )
             )
         )

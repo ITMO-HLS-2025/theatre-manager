@@ -1,24 +1,33 @@
 package ru.itmo.hls.theatremanager.controller
 
 import kotlinx.coroutines.flow.toList
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ru.itmo.hls.theatremanager.dto.HallViewDto
 import ru.itmo.hls.theatremanager.dto.SeatRowViewDto
+import ru.itmo.hls.theatremanager.dto.SeatPriceDto
+import ru.itmo.hls.theatremanager.dto.SeatPricePayload
 import ru.itmo.hls.theatremanager.dto.SeatStatus
 import ru.itmo.hls.theatremanager.dto.SeatStatusViewDto
 import ru.itmo.hls.theatremanager.exception.HallNotFoundException
 import ru.itmo.hls.theatremanager.mapper.toViewDto
 import ru.itmo.hls.theatremanager.service.HallService
+import ru.itmo.hls.theatremanager.service.SeatPriceService
 import ru.itmo.hls.theatremanager.service.SeatService
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/api/halls")
 class HallController(
     private val hallService: HallService,
-    private val seatService: SeatService
+    private val seatService: SeatService,
+    private val seatPriceService: SeatPriceService
 ) {
     @GetMapping("/{id}")
     suspend fun getHall(@PathVariable id: Long): HallViewDto {
@@ -46,5 +55,24 @@ class HallController(
                     }
                 )
             }
+    }
+
+    @PostMapping("/{id}/prices")
+    suspend fun setSeatPrices(
+        @PathVariable id: Long,
+        @RequestParam showId: Long,
+        @RequestBody prices: List<SeatPricePayload>
+    ): List<SeatPriceDto> {
+        if (prices.isEmpty()) return emptyList()
+        val seats = seatService.findAllByHallId(id).toList()
+        val allowedSeatIds = seats.mapNotNull { it.id }.toSet()
+        val requestedSeatIds = prices.map { it.seatId }
+        if (!allowedSeatIds.containsAll(requestedSeatIds)) {
+            throw ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Some seats do not belong to hall $id"
+            )
+        }
+        return seatPriceService.replaceShowPrices(showId, prices)
     }
 }

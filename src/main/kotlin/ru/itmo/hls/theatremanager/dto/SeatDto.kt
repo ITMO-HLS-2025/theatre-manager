@@ -1,12 +1,11 @@
 package ru.itmo.hls.theatremanager.dto
 
-data class SeatRawDto(val row: Int, val seats: List<SeatStatusDto>)
+data class SeatRowCreateDto(val row: Int, val seats: List<SeatCreateDto>)
 
-data class SeatStatusDto
-    (
-    val id: Long,
-    val status: SeatStatus,
-    val number: Int,
+data class SeatCreateDto(val number: Int)
+
+data class SeatPricePayload(
+    val seatId: Long,
     val price: Int
 )
 
