@@ -30,14 +30,18 @@ class HallController(
     private val seatPriceService: SeatPriceService
 ) {
     @GetMapping("/{id}")
-    suspend fun getHall(@PathVariable id: Long): HallViewDto {
+    suspend fun getHall(
+        @PathVariable id: Long
+    ): HallViewDto {
         val hall = hallService.findHallById(id)
             ?: throw HallNotFoundException("Hall not found with id $id")
         return hall.toViewDto()
     }
 
     @GetMapping("/{id}/seats")
-    suspend fun getHallSeats(@PathVariable id: Long): List<SeatRowViewDto> {
+    suspend fun getHallSeats(
+        @PathVariable id: Long
+    ): List<SeatRowViewDto> {
         val seats = seatService.findAllByHallId(id).toList()
         if (seats.isEmpty()) return emptyList()
 

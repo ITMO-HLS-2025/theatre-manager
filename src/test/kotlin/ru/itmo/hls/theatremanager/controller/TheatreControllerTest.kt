@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.http.MediaType
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.jdbc.Sql
@@ -25,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.request
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import ru.itmo.hls.theatremanager.PostgresContainerConfig
 import ru.itmo.hls.theatremanager.TestcontainersConfiguration
 import ru.itmo.hls.theatremanager.client.ShowClient
 import ru.itmo.hls.theatremanager.dto.HallCreateDto
@@ -39,7 +41,8 @@ import ru.itmo.hls.theatremanager.dto.TheatrePayload
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(TestcontainersConfiguration::class)
-class TheatreControllerTest {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+class TheatreControllerTest : PostgresContainerConfig() {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -141,8 +144,8 @@ class TheatreControllerTest {
             city = "Moscow",
             address = "Updated Street 1",
             halls = listOf(
-                HallViewDto(id = 1, number = 11),
-                HallViewDto(id = 2, number = 12)
+                HallViewDto(id = 1, number = 11, theatreId = 10),
+                HallViewDto(id = 2, number = 12, theatreId = 10)
             )
         )
 

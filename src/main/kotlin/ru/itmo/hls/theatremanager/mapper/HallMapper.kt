@@ -9,7 +9,8 @@ import ru.itmo.hls.theatremanager.entity.Hall
 fun Hall.toViewDto() : HallViewDto =
     HallViewDto(
         id = id,
-        number = number
+        number = number,
+        theatreId = theatreId
     )
 
 fun Hall.toDto(seatRaws : List<SeatRowCreateDto>) : HallDto = HallDto(

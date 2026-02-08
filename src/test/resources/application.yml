@@ -2,11 +2,15 @@ spring:
   flyway:
     enabled: false
   cloud:
+    config:
+      enabled: false
     discovery:
       enabled: false
       client:
         simple:
           enabled: false
+  config:
+    import: "optional:configserver:"
 
 eureka:
   client:

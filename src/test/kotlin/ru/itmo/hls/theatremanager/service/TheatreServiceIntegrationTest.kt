@@ -12,6 +12,7 @@ import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
+import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.jdbc.Sql
 import ru.itmo.hls.theatremanager.client.ShowClient
@@ -26,11 +27,13 @@ import ru.itmo.hls.theatremanager.dto.TheatrePayload
 import ru.itmo.hls.theatremanager.exception.HallNotFoundException
 import ru.itmo.hls.theatremanager.exception.TheatreNotFoundException
 import org.junit.jupiter.api.BeforeEach
+import ru.itmo.hls.theatremanager.PostgresContainerConfig
 import ru.itmo.hls.theatremanager.TestcontainersConfiguration
 
 @SpringBootTest
 @Import(TestcontainersConfiguration::class)
-class TheatreServiceIntegrationTest {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+class TheatreServiceIntegrationTest : PostgresContainerConfig() {
 
     @Autowired
     private lateinit var theatreService: TheatreService
@@ -122,8 +125,8 @@ class TheatreServiceIntegrationTest {
             city = "Moscow",
             address = "New Street 5",
             halls = listOf(
-                HallViewDto(id = 1L, number = 10),
-                HallViewDto(id = 2L, number = 20)
+                HallViewDto(id = 1L, number = 10, theatreId = 1L),
+                HallViewDto(id = 2L, number = 20, theatreId = 1L)
             )
         )
 

@@ -36,36 +36,53 @@ class TheatreController(
     }
 
     @GetMapping("/{id}")
-    suspend fun getTheatreInfo(@PathVariable id: Long): TheatreDto =
+    suspend fun getTheatreInfo(
+        @PathVariable id: Long
+    ): TheatreDto =
         theatreService.getTheatreInfo(id)
 
     @PostMapping("/batch")
-    suspend fun getTheatres(@RequestBody ids: List<Long>): List<TheatreViewDto> =
+    suspend fun getTheatres(
+        @RequestBody ids: List<Long>
+    ): List<TheatreViewDto> =
         theatreService.getTheatresByIds(ids)
 
     @DeleteMapping("/{id}")
-    suspend fun deleteTheatre(@PathVariable id: Long) {
+    suspend fun deleteTheatre(
+        @PathVariable id: Long
+    ) {
         theatreService.deleteTheatre(id)
     }
 
     @PostMapping
-    suspend fun createTheatre(@RequestBody payload: TheatreCreatePayload): TheatrePayload =
+    suspend fun createTheatre(
+        @RequestBody payload: TheatreCreatePayload
+    ): TheatrePayload =
         theatreService.createTheatre(payload)
 
     @PutMapping
-    suspend fun updateTheatre(@RequestBody payload: TheatrePayload): TheatrePayload =
+    suspend fun updateTheatre(
+        @RequestBody payload: TheatrePayload
+    ): TheatrePayload =
         theatreService.updateTheatre(payload)
 
     @PostMapping("/{theatreId}/halls")
-    suspend fun createHall(@PathVariable theatreId: Long, @RequestBody dto: HallCreateDto): HallDto =
+    suspend fun createHall(
+        @PathVariable theatreId: Long,
+        @RequestBody dto: HallCreateDto
+    ): HallDto =
         theatreService.createHall(theatreId, dto)
 
     @PutMapping("/halls")
-    suspend fun updateHall(@RequestBody dto: HallDto): HallDto =
+    suspend fun updateHall(
+        @RequestBody dto: HallDto
+    ): HallDto =
         theatreService.updateHall(dto)
 
     @DeleteMapping("/halls/{id}")
-    suspend fun deleteHall(@PathVariable id: Long) {
+    suspend fun deleteHall(
+        @PathVariable id: Long
+    ) {
         theatreService.deleteHall(id)
     }
 }
