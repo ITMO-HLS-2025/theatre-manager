@@ -3,7 +3,7 @@ package ru.itmo.hls.theatremanager
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import ru.itmo.hls.theatremanager.PostgresContainerConfig
+import ru.itmo.hls.theatremanager.testconfig.PostgresContainerConfig
 import org.springframework.test.annotation.DirtiesContext
 
 @Import(TestcontainersConfiguration::class)
